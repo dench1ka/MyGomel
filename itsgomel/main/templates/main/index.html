@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Гомель</title>
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <section class="navigation">
+            <a href="{% url 'home' %}"><img src="{% static 'general/img/logo.svg' %}" alt="Logo" class="logo"></a>
+            <div class="nav-btns">
+                <a href="{% url 'murali' %}">Муралы</a>
+                <a href="gomelbeforarfter.html">Гомель до/после</a>
+                <a href="history.html">История</a>
+                <a href="blog.html">Блог</a>
+                <a href="college.html">Колледж</a>
+            </div>
+        </section>
+
+        <div class="main-picture"><img src="{% static 'general/img/Main-image.svg' %}" alt="Main-image"></div>
+
+        <section class="description">
+            <div class="desc-block">
+                <h1>Год благоустройства — время перемен и заботы о каждом.</h1>
+                <p>2025 год в Беларуси объявлен Годом благоустройства — это не просто формальность, а важный
+                    общественный
+                    вектор, который касается каждого: от жителя малой деревни до жителя большого города.</p>
+            </div>
+            <div class="desc-block">
+                <h1>Почему это важно?</h1>
+                <p>Благоустройство — это не только новые клумбы и скамейки. Это — пространства, в которых мы живём,
+                    отдыхаем, растим детей, встречаемся с друзьями. Это то, что формирует настроение города, ощущение
+                    уюта,
+                    безопасности и гордости за свою малую родину.</p>
+            </div>
+            <div class="desc-block">
+                <h1>Цели "Года благоустройства":</h1>
+                <p>- Сделать города и посёлки чистыми, зелёными и современными<br>
+                    - Поддержать историческую архитектуру и гармонично интегрировать новое в старое<br>
+                    - Создать удобные дворы, площадки, парки, общественные пространства<br>
+                    - Развивать экологичную инфраструктуру — велодорожки, зоны отдыха, экомаршруты<br>
+                    - Вовлечь жителей в процессы: субботники, проекты, голосования</p>
+            </div>
+            <div class="desc-block">
+                <h1>Что это даёт?</h1>
+                <p>- Людям — комфорт, безопасность, здоровье и ощущение дома<br>
+                    - Городам — рост привлекательности, развитие туризма, новых инвестиций<br>
+                    - Природе — внимание, восстановление зелёных зон, экопросвещение<br>
+                    - Обществу — единство и общий труд на благо родного края</p>
+            </div>
+            <div class="desc-block">
+                <h1>Год благоустройства — это возможность каждому внести вклад в то, каким будет наш общий дом.</h1>
+                <p>Неравнодушие начинается с малого: посадить дерево, поддержать инициативу, предложить идею, убрать во
+                    дворе.<br> Вместе мы делаем Беларусь красивой, чистой и по-настоящему живой.</p>
+            </div>
+        </section>
+
+        <div class="map"></div>
+
+    </div>
+
+    <footer>
+        <div class="main-footer">
+            <div class="links">
+                <a href="{% url 'murali' %}">Муралы</a>
+                <a href="gomelbeforarfter.html">Гомель до/после</a>
+                <a href="history.html">История</a>
+                <a href="blog.html">Блог</a>
+                <a href="college.html">Колледж</a>
+            </div>
+            <div class="contacts">
+                <p>info@blagobyt.by<br>+375 (29) 123-45-67</p>
+                <div class="socials">
+                    <img src="{% static 'general/img/social/telegram.svg' %}" alt="telegram"><img src="{% static 'general/img/social/instagram.svg' %}"
+                        alt="instagram"><img src="{% static 'general/img/social/youtube.svg' %}" alt="youtube">
+                </div>
+            </div>
+        </div>
+        <div class="copyright">© 2025 Благоустройство Беларуси.</div>
+    </footer>
+</body>
+
+</html>
