@@ -2,8 +2,9 @@ venv/
 __pycache__/
 *.pyc
 *.pyo
-*.sqlite3
 *.log
 *.idea/
 .DS_Store
 .env
+*.sqlite3
+db.sqlite3

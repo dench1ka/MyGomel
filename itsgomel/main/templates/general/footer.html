@@ -1,0 +1,22 @@
+{% load static %}
+
+<footer>
+    <div class="main-footer">
+        <div class="links">
+            <a href="{% url 'murali' %}">Муралы</a>
+            <a href="{% static 'general/html/gomelbeforarfter.html' %}">Гомель до/после</a>
+            <a href="{% static 'general/html/history.html' %}">История</a>
+            <a href="{% static 'general/html/blog.html' %}">Блог</a>
+            <a href="{% static 'general/html/college.html' %}">Колледж</a>
+        </div>
+        <div class="contacts">
+            <p>info@blagobyt.by<br>+375 (29) 123-45-67</p>
+            <div class="socials">
+                <img src="{% static 'general/img/social/telegram.svg' %}" alt="telegram">
+                <img src="{% static 'general/img/social/instagram.svg' %}" alt="instagram">
+                <img src="{% static 'general/img/social/youtube.svg' %}" alt="youtube">
+            </div>
+        </div>
+    </div>
+    <div class="copyright">© 2025 Благоустройство Беларуси.</div>
+</footer>

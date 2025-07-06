@@ -1,29 +1,10 @@
+{% extends 'general/base.html' %}
+
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block title %}Муралы - Мой Гомель{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Муралы</title>
-    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-</head>
-
-<body>
-    <div class="container">
-        <section class="navigation">
-            <a href="{% url 'home' %}"><img src="{% static 'general/img/logo.svg' %}" alt="Logo" class="logo"></a>
-            <div class="nav-btns">
-                <a href="{% url 'murali' %}">Муралы</a>
-                <a href="gomelbeforarfter.html">Гомель до/после</a>
-                <a href="history.html">История</a>
-                <a href="blog.html">Блог</a>
-                <a href="college.html">Колледж</a>
-            </div>
-        </section>
-
+{% block content %}
        <section class="description">
             <div class="desc-block">
                 <h1>Что такое муралы?</h1>
@@ -75,26 +56,4 @@
         <div class="map"></div>
 
     </div>
-
-    <footer>
-        <div class="main-footer">
-            <div class="links">
-                <a href="{% url 'murali' %}">Муралы</a>
-                <a href="gomelbeforarfter.html">Гомель до/после</a>
-                <a href="history.html">История</a>
-                <a href="blog.html">Блог</a>
-                <a href="college.html">Колледж</a>
-            </div>
-            <div class="contacts">
-                <p>info@blagobyt.by<br>+375 (29) 123-45-67</p>
-                <div class="socials">
-                    <img src="{% static 'general/img/social/telegram.svg' %}" alt="telegram"><img src="{% static 'general/img/social/instagram.svg' %}"
-                        alt="instagram"><img src="{% static 'general/img/social/youtube.svg' %}" alt="youtube">
-                </div>
-            </div>
-        </div>
-        <div class="copyright">© 2025 Благоустройство Беларуси.</div>
-    </footer>
-</body>
-
-</html>
+{% endblock %}
