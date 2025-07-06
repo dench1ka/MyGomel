@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-*43_p54j@jbiy2&*#@iv&v=p4bpsg5sjh&e@%@zf0@!9$dev@g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -55,7 +55,7 @@ ROOT_URLCONF = 'itsgomel.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'itsgomel' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
