@@ -1,0 +1,59 @@
+{% extends 'general/base.html' %}
+
+{% load static %}
+
+{% block title %}Муралы - Мой Гомель{% endblock %}
+
+{% block content %}
+       <section class="description">
+            <div class="desc-block">
+                <h1>Что такое муралы?</h1>
+                <p>Муралы — это крупномасштабные настенные росписи, которые преображают городское пространство,
+                    вдохновляют жителей и подчеркивают уникальность места. В 2025 году они становятся символом нового
+                    взгляда на благоустройство и культуру.</p>
+            </div>
+            <div class="desc-block">
+                <h1>Цели проекта:</h1>
+                <p>Преобразить городские стены в произведения искусства<br>
+                    Сохранить историческую память через образы и сюжеты<br>
+                    Поддержать молодых и опытных художников<br>
+                    Вовлечь местных жителей в культурную жизнь города</p>
+            </div>
+        </section>
+
+        <section class="mural-galery">
+            <h1>Галерея муралов</h1>
+            <div class="mural-cards">
+                <div class="mural-card">
+                    <h1>Название</h1>
+                    <img src="{% static 'mural/img/v-gomele-poyavilsya-pyatyj-mural.jpg' %}">
+                    <div class="addres">ул. Советская, 15</div>
+                    <a href="moral-more-details.html">Подробнее</a>
+                </div>
+                <div class="mural-card">
+                    <h1>Название</h1>
+                    <img src="{% static 'mural/img/v-gomele-poyavilsya-pyatyj-mural.jpg' %}">
+                    <div class="addres">ул. Советская, 15</div>
+                    <a href="moral-more-details.html">Подробнее</a>
+                </div>
+                                <div class="mural-card">
+                    <h1>Название</h1>
+                    <img src="{% static 'mural/img/v-gomele-poyavilsya-pyatyj-mural.jpg' %}">
+                    <div class="addres">ул. Советская, 15</div>
+                    <a href="moral-more-details.html">Подробнее</a>
+                </div>
+                                <div class="mural-card">
+                    <h1>Название</h1>
+                    <img src="{% static 'mural/img/v-gomele-poyavilsya-pyatyj-mural.jpg' %}">
+                    <div class="addres">ул. Советская, 15</div>
+                    <a href="moral-more-details.html">Подробнее</a>
+                </div>
+
+            </div>
+            <button class="see-more">Показать еще</button>
+        </section>
+
+        <div class="map"></div>
+
+    </div>
+{% endblock %}
