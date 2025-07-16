@@ -77,6 +77,8 @@ footer {
     justify-content: center;
 }
 
+
+
 .main-picture img {
     width: 60%;
     height: auto;
@@ -182,6 +184,7 @@ footer {
     font-family: 'Roboto', sans-serif;
     color: #1F3D1F;
     border-radius: 30px;
+    font-size: 24px
 }
 
 .mural-galery > button {
@@ -219,10 +222,11 @@ footer {
     border-radius: 30px;
 }
 
-.mural-card > img {
+.mural-card img {
     width: 100%;
-    height: auto;
-     border-radius: 15px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .mural-card > .addres, .mural-card > a {

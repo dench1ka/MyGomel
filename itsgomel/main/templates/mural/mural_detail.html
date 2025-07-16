@@ -1,0 +1,17 @@
+{% extends 'general/base.html' %}
+{% load static %}
+
+{% block title %}{{ mural.title }} — Муралы{% endblock %}
+
+{% block content %}
+<section class="mural-detail">
+    <h1>{{ mural.title }}</h1>
+    <img src="{{ mural.image.url }}" alt="Изображение мурала {{ mural.title }}">
+    <p><strong>Адрес:</strong> {{ mural.address }}</p>
+    <p>{{ mural.description }}</p>
+    {% if video_url %}
+      <iframe width="560" height="315" src="{{ video_url }}?rel=0&showinfo=0" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {% endif %}
+</section>
+{% endblock %}
