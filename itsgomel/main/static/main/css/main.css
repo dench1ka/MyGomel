@@ -185,7 +185,7 @@ footer {
     font-size: 24px
 }
 
-.mural-galery > button {
+.mural-galery > button, .murals-offers > button {
     padding: 15px 30px;
     color: #E3D9C3;
     font-family: 'Roboto', sans-serif;
@@ -235,3 +235,186 @@ footer {
     font-weight: bold;
     text-decoration: none;
 }
+
+.mural-card > h1 {
+    white-space: nowrap;        
+    overflow: hidden;            
+    text-overflow: ellipsis;     
+    max-width: 100%; 
+}
+
+.mural-detail {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.mural-detail > img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.mural-detail > p {
+    width: 100%;
+    height: auto;
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    color: #1F3D1F;
+}
+
+.map {
+    width: 100%;
+    height: 600px;
+    border: black solid 1px;
+    border-radius: 30px;
+}
+
+.citizens-comments {
+    width: 100%;
+    height: auto;
+    background-color: rgba(143, 209, 129, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    padding: 50px;
+    font-family: 'Roboto', sans-serif;
+    color: #1F3D1F;
+    border-radius: 30px;
+    font-size: 24px
+}
+
+.comments {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.comments-arrow { 
+    width: 10%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.comments-arrow:hover {
+    cursor: pointer;
+}
+
+.comments-arrow > img {
+    width: 50px;
+    height: auto;
+    background-color: #7BAE7F;
+    border-radius: 50%;
+}
+
+#comments-next {
+    rotate: 180deg;
+}
+
+.comments-cards {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comments-card {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    padding: 20px;
+    background-color: #7BAE7F;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    gap: 10px;
+}
+
+.comments-card > hr {
+    width: 100%;
+    height: 2px;
+    background-color: #004F46;
+    border: none;
+}
+
+.murals-offers {
+    width: 100%;
+    height: auto;
+    background-color: rgba(143, 209, 129, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 30px 0;
+    border-radius: 30px;
+}
+
+.murals-offers > h4 {
+    width: 50%;
+    font-size: 24px;
+    font-family: 'Roboto', sans-serif;
+    color: #1F3D1F;
+    text-align: center;
+}
+
+
+.offer-form {
+    width: 80%;
+    height: auto;
+    background-color: #7BAE7F; 
+    padding: 20px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-family: sans-serif;
+}
+
+.form-row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.form-row label {
+    width: 20%; 
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    color: #152915;
+    font-weight: bold;
+    text-align: left;
+}
+
+.form-row input {
+    width: 90%;
+    padding: 8px;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    border: none;
+    border-radius: 8px;
+    background-color: #d9d9d9;
+}
+
+

@@ -57,7 +57,7 @@ ROOT_URLCONF = 'itsgomel.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'djanёёgo.template.backends.django.DjangoTemplates',
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'itsgomel' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
