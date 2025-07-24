@@ -39,35 +39,23 @@
     <h1>Комментарии горожан</h1>
     <div class="comments">
         <div class="comments-arrow" id="comments-back">
-            <img src="{% static 'general/img/arrow.svg' %}" alt="back">
+            <img src="{% static 'general/img/arrow.svg' %}" alt="Назад">
         </div>
-        <div class="comments-cards">
-            <div class="comments-card">
-                <p>Иван Иванович</p> <!-- Имя горожанина -->
-                <hr>
-                <p>Отлично! Долго этого ждал. Отлично! Долго этого ждал.Отлично! Долго этого ждал.</p>
-                <!--  Комментарий -->
-            </div>
-        </div>
-        <div class="comments-cards">
-            <div class="comments-card">
-                <p>Иван Иванович</p> <!-- Имя горожанина -->
-                <hr>
-                <p>Отлично! Долго этого ждал. Отлично! Долго этого ждал.Отлично! Долго этого ждал.</p>
-                <!--  Комментарий -->
-            </div>
-        </div>
-        <div class="comments-cards">
-            <div class="comments-card">
-                <p>Иван Иванович</p> <!-- Имя горожанина -->
-                <hr>
-                <p>Отлично! Долго этого ждал. Отлично! Долго этого ждал.Отлично! Долго этого ждал.</p>
-                <!--  Комментарий -->
+
+        <div class="slider-window">
+            <div class="slider-track">
+                {% for comment in comments %}
+                <div class="comments-card">
+                    <p>{{ comment.name }}</p>
+                    <hr>
+                    <p>{{ comment.text }}</p>
+                </div>
+                {% endfor %}
             </div>
         </div>
 
         <div class="comments-arrow" id="comments-next">
-            <img src="{% static 'general/img/arrow.svg' %}" alt="next">
+            <img src="{% static 'general/img/arrow.svg' %}" alt="Вперед">
         </div>
     </div>
 </section>
@@ -110,6 +98,44 @@
 <div class="map"></div>
 
 <script>
+const track = document.querySelector('.slider-track');
+const cards = document.querySelectorAll('.comments-card');
+const btnNext = document.getElementById('comments-next');
+const btnBack = document.getElementById('comments-back');
+
+const cardWidth = 240; // ширина карточки + margin (220 + 10*2)
+const visibleCards = 2; // показываем 2 карточки
+const step = 2; // прокручиваем сразу 2 карточки (один «экран»)
+let position = 0; // позиция сдвига в карточках
+
+// Считаем максимальное количество "экранов" (пар карточек)
+const maxPosition = Math.ceil(cards.length / visibleCards) - 1;
+
+function updateButtons() {
+  btnBack.style.opacity = position <= 0 ? "0.3" : "1";
+  btnBack.style.pointerEvents = position <= 0 ? "none" : "auto";
+
+  btnNext.style.opacity = position >= maxPosition ? "0.3" : "1";
+  btnNext.style.pointerEvents = position >= maxPosition ? "none" : "auto";
+}
+
+function slide(dir) {
+  position += dir;
+
+  if (position < 0) position = 0;
+  if (position > maxPosition) position = maxPosition;
+
+  track.style.transform = `translateX(-${position * visibleCards * cardWidth}px)`;
+  updateButtons();
+}
+
+btnNext.addEventListener('click', () => slide(1));
+btnBack.addEventListener('click', () => slide(-1));
+
+updateButtons();
+
+
+
     let offset = {{ initial_offset }};
     const btn = document.getElementById('see-more-btn');
     const container = document.getElementById('mural-cards');

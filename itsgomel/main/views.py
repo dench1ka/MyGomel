@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Mural
+from .models import Mural, Comment
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
@@ -24,9 +24,12 @@ def mural(request):
             })
         return JsonResponse({'murals': data})
 
+    comments = Comment.objects.order_by('-created_at')[:10]
+
     context = {
         'murals': murals,
         'initial_offset': limit,
+        'comments': comments,
     }
     return render(request, 'mural/mural.html', context)
 
