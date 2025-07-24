@@ -4,6 +4,7 @@ from .models import Mural
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
+
 def index(request):
     return render(request, 'main/index.html')
 
@@ -48,5 +49,4 @@ def mural_detail(request, pk):
         'mural': mural,
         'video_url': embed_link
     })
-
 
