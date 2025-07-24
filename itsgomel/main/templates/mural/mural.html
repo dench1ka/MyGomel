@@ -1,59 +1,147 @@
 {% extends 'general/base.html' %}
-
 {% load static %}
 
 {% block title %}Муралы - Мой Гомель{% endblock %}
 
 {% block content %}
-       <section class="description">
-            <div class="desc-block">
-                <h1>Что такое муралы?</h1>
-                <p>Муралы — это крупномасштабные настенные росписи, которые преображают городское пространство,
-                    вдохновляют жителей и подчеркивают уникальность места. В 2025 году они становятся символом нового
-                    взгляда на благоустройство и культуру.</p>
-            </div>
-            <div class="desc-block">
-                <h1>Цели проекта:</h1>
-                <p>Преобразить городские стены в произведения искусства<br>
-                    Сохранить историческую память через образы и сюжеты<br>
-                    Поддержать молодых и опытных художников<br>
-                    Вовлечь местных жителей в культурную жизнь города</p>
-            </div>
-        </section>
-
-        <section class="mural-galery">
-            <h1>Галерея муралов</h1>
-            <div class="mural-cards">
-                <div class="mural-card">
-                    <h1>Название</h1>
-                    <img src="{% static 'mural/img/v-gomele-poyavilsya-pyatyj-mural.jpg' %}">
-                    <div class="addres">ул. Советская, 15</div>
-                    <a href="moral-more-details.html">Подробнее</a>
-                </div>
-                <div class="mural-card">
-                    <h1>Название</h1>
-                    <img src="{% static 'mural/img/v-gomele-poyavilsya-pyatyj-mural.jpg' %}">
-                    <div class="addres">ул. Советская, 15</div>
-                    <a href="moral-more-details.html">Подробнее</a>
-                </div>
-                                <div class="mural-card">
-                    <h1>Название</h1>
-                    <img src="{% static 'mural/img/v-gomele-poyavilsya-pyatyj-mural.jpg' %}">
-                    <div class="addres">ул. Советская, 15</div>
-                    <a href="moral-more-details.html">Подробнее</a>
-                </div>
-                                <div class="mural-card">
-                    <h1>Название</h1>
-                    <img src="{% static 'mural/img/v-gomele-poyavilsya-pyatyj-mural.jpg' %}">
-                    <div class="addres">ул. Советская, 15</div>
-                    <a href="moral-more-details.html">Подробнее</a>
-                </div>
-
-            </div>
-            <button class="see-more">Показать еще</button>
-        </section>
-
-        <div class="map"></div>
-
+<section class="description">
+    <div class="desc-block">
+        <h1>Что такое муралы?</h1>
+        <p>Муралы — это крупномасштабные настенные росписи, которые преображают городское пространство,
+            вдохновляют жителей и подчеркивают уникальность места. В 2025 году они становятся символом нового
+            взгляда на благоустройство и культуру.</p>
     </div>
+    <div class="desc-block">
+        <h1>Цели проекта:</h1>
+        <p>Преобразить городские стены в произведения искусства<br>
+            Сохранить историческую память через образы и сюжеты<br>
+            Поддержать молодых и опытных художников<br>
+            Вовлечь местных жителей в культурную жизнь города</p>
+    </div>
+</section>
+
+<section class="mural-galery">
+    <h1>Галерея муралов</h1>
+    <div class="mural-cards" id="mural-cards">
+        {% for mural in murals %}
+        <div class="mural-card">
+            <h1>{{ mural.title }}</h1>
+            <img src="{{ mural.image.url }}" alt="Изображение мурала {{ mural.title }}">
+            <div class="address">{{ mural.address }}</div>
+            <a href="{% url 'mural_detail' mural.id %}">Подробнее</a>
+        </div>
+        {% endfor %}
+    </div>
+    <button class="see-more" id="see-more-btn">Показать еще</button>
+</section>
+
+<section class="citizens-comments">
+    <h1>Комментарии горожан</h1>
+    <div class="comments">
+        <div class="comments-arrow" id="comments-back">
+            <img src="{% static 'general/img/arrow.svg' %}" alt="back">
+        </div>
+        <div class="comments-cards">
+            <div class="comments-card">
+                <p>Иван Иванович</p> <!-- Имя горожанина -->
+                <hr>
+                <p>Отлично! Долго этого ждал. Отлично! Долго этого ждал.Отлично! Долго этого ждал.</p>
+                <!--  Комментарий -->
+            </div>
+        </div>
+        <div class="comments-cards">
+            <div class="comments-card">
+                <p>Иван Иванович</p> <!-- Имя горожанина -->
+                <hr>
+                <p>Отлично! Долго этого ждал. Отлично! Долго этого ждал.Отлично! Долго этого ждал.</p>
+                <!--  Комментарий -->
+            </div>
+        </div>
+        <div class="comments-cards">
+            <div class="comments-card">
+                <p>Иван Иванович</p> <!-- Имя горожанина -->
+                <hr>
+                <p>Отлично! Долго этого ждал. Отлично! Долго этого ждал.Отлично! Долго этого ждал.</p>
+                <!--  Комментарий -->
+            </div>
+        </div>
+
+        <div class="comments-arrow" id="comments-next">
+            <img src="{% static 'general/img/arrow.svg' %}" alt="next">
+        </div>
+    </div>
+</section>
+
+<section class="murals-offers">
+    <h1>Хотите мурал в своём районе?</h1>
+    <h4>У вас есть идея для нового мурала в вашем городе? Поделитесь ею — и, возможно, она станет частью городского
+        искусства!</h4>
+    <div class="offer-form">
+        <div class="offer-form">
+            <div class="form-row">
+                <label for="new-name">Ваше имя*</label>
+                <input type="text" id="new-name">
+            </div>
+
+            <div class="form-row">
+                <label for="new-email">email*</label>
+                <input type="email" id="new-email">
+            </div>
+
+            <div class="form-row">
+                <label for="new-address">Адрес мурала*</label>
+                <input type="text" id="new-address">
+            </div>
+
+            <div class="form-row">
+                <label for="new-short-descp">Описание мурала*</label>
+                <input type="text" id="new-short-descp">
+            </div>
+
+            <div class="form-row">
+                <label for="mural-file">Фото/видео мурала</label>
+                <input type="file" id="mural-file">
+            </div>
+        </div>
+    </div>
+    <button class="send">Отправить</button>
+</section>
+
+<div class="map"></div>
+
+<script>
+    let offset = {{ initial_offset }};
+    const btn = document.getElementById('see-more-btn');
+    const container = document.getElementById('mural-cards');
+
+    btn.addEventListener('click', () => {
+        fetch(`?offset=${offset}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.murals.length === 0) {
+                    btn.style.display = 'none'; // Скрываем кнопку, если муралов больше нет
+                    return;
+                }
+                data.murals.forEach(mural => {
+                    const card = document.createElement('div');
+                    card.classList.add('mural-card');
+                    card.innerHTML = `
+                    <h1>${mural.title}</h1>
+                    <img src="${mural.image_url}" alt="Изображение мурала ${mural.title}">
+                    <div class="address">${mural.address}</div>
+                    <a href="/murals/${mural.id}/">Подробнее</a>
+                `;
+                    container.appendChild(card);
+                });
+                offset += data.murals.length;
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке муралов:', error);
+            });
+    });
+</script>
 {% endblock %}
