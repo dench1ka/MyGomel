@@ -13,6 +13,7 @@ class Mural(models.Model):
         return self.title
 
 class Comment(models.Model):
+    mural = models.ForeignKey(Mural, on_delete=models.CASCADE, related_name='comments')
     name = models.CharField("Имя", max_length=100)
     text = models.TextField("Комментарий")
     created_at = models.DateTimeField("Дата создания", auto_now_add=True)

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Mural, Comment
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 
 def index(request):
@@ -48,8 +48,19 @@ def mural_detail(request, pk):
     mural = get_object_or_404(Mural, pk=pk)
     embed_link = get_embed_link(mural.video_url)
 
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        text = request.POST.get('text')
+
+        if name and text:
+            Comment.objects.create(mural=mural, name=name, text=text)
+            return redirect('mural_detail', pk=pk)  # после сохранения - обновить страницу
+
+    comments = mural.comments.order_by('-created_at')  # комментарии для этого мурала
+
     return render(request, 'mural/mural_detail.html', {
         'mural': mural,
-        'video_url': embed_link
+        'video_url': embed_link,
+        'comments': comments,
     })
 

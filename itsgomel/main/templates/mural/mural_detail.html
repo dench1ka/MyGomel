@@ -14,5 +14,35 @@
     <p><strong>Адрес:</strong> {{ mural.address }}</p>
     <p>{{ mural.description }}</p>
     <div class="map"></div>
+
+        <hr>
+
+    <h2>Комментарии</h2>
+    <div class="comments-list">
+        {% for comment in comments %}
+            <div class="comment">
+                <p><strong>{{ comment.name }}</strong> <small>{{ comment.created_at|date:"d.m.Y H:i" }}</small></p>
+                <p>{{ comment.text }}</p>
+            </div>
+        {% empty %}
+            <p>Пока нет комментариев.</p>
+        {% endfor %}
+    </div>
+
+    <hr>
+
+    <h2>Добавить комментарий</h2>
+    <form method="post" action="">
+        {% csrf_token %}
+        <div>
+            <label for="id_name">Имя:</label><br>
+            <input type="text" id="id_name" name="name" required>
+        </div>
+        <div>
+            <label for="id_text">Комментарий:</label><br>
+            <textarea id="id_text" name="text" rows="4" required></textarea>
+        </div>
+        <button type="submit">Отправить</button>
+    </form>
 </section>
 {% endblock %}
