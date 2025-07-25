@@ -8,6 +8,7 @@ urlpatterns = [
     # path('mural', views.mural, name='murali')
     path('murals/', views.mural, name='murals'),
     path('murals/<int:pk>/', views.mural_detail, name='mural_detail'),
+    path('suggest_mural/', views.suggest_mural, name='suggest_mural'),
 ]
 
 if settings.DEBUG:

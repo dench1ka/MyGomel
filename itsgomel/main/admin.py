@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Mural, Comment
+from .models import Mural, Comment, MuralSuggestion
 
 # Register your models here.
 @admin.register(Mural)
@@ -13,3 +13,8 @@ class CommentAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at',)
     list_filter = ('created_at',)
     search_fields = ('name', 'text')
+
+@admin.register(MuralSuggestion)
+class MuralSuggestionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'address', 'created_at')
+    readonly_fields = ('created_at',)

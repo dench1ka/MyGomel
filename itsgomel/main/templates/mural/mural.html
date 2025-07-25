@@ -62,37 +62,39 @@
 
 <section class="murals-offers">
     <h1>Хотите мурал в своём районе?</h1>
-    <h4>У вас есть идея для нового мурала в вашем городе? Поделитесь ею — и, возможно, она станет частью городского
-        искусства!</h4>
-    <div class="offer-form">
-        <div class="offer-form">
-            <div class="form-row">
-                <label for="new-name">Ваше имя*</label>
-                <input type="text" id="new-name">
-            </div>
+    <h4>У вас есть идея для нового мурала в вашем городе? Поделитесь ею — и, возможно, она станет частью городского искусства!</h4>
 
-            <div class="form-row">
-                <label for="new-email">email*</label>
-                <input type="email" id="new-email">
-            </div>
-
-            <div class="form-row">
-                <label for="new-address">Адрес мурала*</label>
-                <input type="text" id="new-address">
-            </div>
-
-            <div class="form-row">
-                <label for="new-short-descp">Описание мурала*</label>
-                <input type="text" id="new-short-descp">
-            </div>
-
-            <div class="form-row">
-                <label for="mural-file">Фото/видео мурала</label>
-                <input type="file" id="mural-file">
-            </div>
+    <form id="suggest-form" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="form-row">
+            <label for="new-name">Ваше имя*</label>
+            <input type="text" id="new-name" name="name" required>
         </div>
-    </div>
-    <button class="send">Отправить</button>
+
+        <div class="form-row">
+            <label for="new-email">email*</label>
+            <input type="email" id="new-email" name="email" required>
+        </div>
+
+        <div class="form-row">
+            <label for="new-address">Адрес мурала*</label>
+            <input type="text" id="new-address" name="address" required>
+        </div>
+
+        <div class="form-row">
+            <label for="new-short-descp">Описание мурала*</label>
+            <input type="text" id="new-short-descp" name="description" required>
+        </div>
+
+        <div class="form-row">
+            <label for="mural-file">Фото/видео мурала</label>
+            <input type="file" id="mural-file" name="file">
+        </div>
+
+        <button type="submit" class="send">Отправить</button>
+    </form>
+
+    <div id="suggest-response"></div>
 </section>
 
 <div class="map"></div>
@@ -169,5 +171,35 @@ updateButtons();
                 console.error('Ошибка при загрузке муралов:', error);
             });
     });
+
+    document.getElementById('suggest-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    fetch("{% url 'suggest_mural' %}", {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value,
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        const responseDiv = document.getElementById('suggest-response');
+        if (data.status === 'success') {
+            responseDiv.innerHTML = `<p style="color: green;">${data.message}</p>`;
+            form.reset();
+        } else {
+            responseDiv.innerHTML = `<p style="color: red;">${data.message}</p>`;
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка при отправке предложения:', error);
+        document.getElementById('suggest-response').innerHTML = `<p style="color: red;">Произошла ошибка.</p>`;
+    });
+});
 </script>
 {% endblock %}

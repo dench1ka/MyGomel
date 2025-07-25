@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Mural, Comment
+from .models import Mural, Comment, MuralSuggestion
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 
@@ -64,3 +64,25 @@ def mural_detail(request, pk):
         'comments': comments,
     })
 
+
+def suggest_mural(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+        description = request.POST.get('description')
+        file = request.FILES.get('file')
+
+        if not all([name, email, address, description]):
+            return JsonResponse({'status': 'error', 'message': 'Все поля, кроме файла, обязательны'}, status=400)
+
+        MuralSuggestion.objects.create(
+            name=name,
+            email=email,
+            address=address,
+            description=description,
+            file=file
+        )
+        return JsonResponse({'status': 'success', 'message': 'Предложение успешно отправлено'})
+
+    return JsonResponse({'status': 'error', 'message': 'Метод не поддерживается'}, status=405)
