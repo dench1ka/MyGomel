@@ -3,17 +3,21 @@ from django.http import HttpResponse
 from .models import Mural, Comment, MuralSuggestion
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
+from django.core.serializers.json import DjangoJSONEncoder
+import json
 
 
 def index(request):
     return render(request, 'main/index.html')
 
+
 def mural(request):
     offset = int(request.GET.get('offset', 0))
     limit = 4
-    murals = Mural.objects.all()[offset:offset + limit]
 
+    # Для AJAX-запросов - возвращаем только часть данных
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        murals = Mural.objects.all()[offset:offset + limit]
         data = []
         for mural in murals:
             data.append({
@@ -24,15 +28,29 @@ def mural(request):
             })
         return JsonResponse({'murals': data})
 
+    # Для обычного запроса - все муралы для карты
+    all_murals = Mural.objects.all()
     comments = Comment.objects.order_by('-created_at')[:10]
 
+    # Подготовка данных для карты
+    murals_coords = Mural.objects.exclude(latitude__isnull=True).exclude(longitude__isnull=True)
+    mural_data = [
+        {
+            'id': m.id,
+            'title': m.title,
+            'lat': m.latitude,
+            'lng': m.longitude
+        } for m in murals_coords
+    ]
+
     context = {
-        'murals': murals,
+        'murals': all_murals[:limit],
+        'all_murals': all_murals,
         'initial_offset': limit,
         'comments': comments,
+        'murals_json': json.dumps(mural_data, cls=DjangoJSONEncoder),
     }
     return render(request, 'mural/mural.html', context)
-
 
 def get_embed_link(original_url):
     if not original_url:
@@ -54,16 +72,25 @@ def mural_detail(request, pk):
 
         if name and text:
             Comment.objects.create(mural=mural, name=name, text=text)
-            return redirect('mural_detail', pk=pk)  # после сохранения - обновить страницу
+            return redirect('mural_detail', pk=pk)
 
-    comments = mural.comments.order_by('-created_at')  # комментарии для этого мурала
+    comments = mural.comments.order_by('-created_at')
+
+    # Подготовка данных для карты
+    mural_data = {
+        'id': mural.id,
+        'title': mural.title,
+        'lat': mural.latitude,
+        'lng': mural.longitude,
+        'address': mural.address
+    }
 
     return render(request, 'mural/mural_detail.html', {
         'mural': mural,
         'video_url': embed_link,
         'comments': comments,
+        'mural_json': json.dumps(mural_data, cls=DjangoJSONEncoder),
     })
-
 
 def suggest_mural(request):
     if request.method == 'POST':

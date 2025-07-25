@@ -1,13 +1,44 @@
+import requests
 from django.db import models
 
-# Create your models here.
-
 class Mural(models.Model):
-    title = models.CharField("Название", max_length= 200)
-    address = models.CharField("Адрес", max_length= 300)
+    title = models.CharField("Название", max_length=200)
+    address = models.CharField("Адрес", max_length=300)
     description = models.CharField("Описание", max_length=500)
     image = models.ImageField("Главное изображение", upload_to='')
     video_url = models.URLField("Ссылка на видео", blank=True, null=True)
+    latitude = models.FloatField("Широта", blank=True, null=True)
+    longitude = models.FloatField("Долгота", blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        # Если координаты не указаны, пытаемся получить их по адресу
+        if (self.latitude is None or self.longitude is None) and self.address:
+            self.latitude, self.longitude = self.get_coords_from_address(self.address)
+        super().save(*args, **kwargs)
+
+    @staticmethod
+    def get_coords_from_address(address):
+        try:
+            url = 'https://nominatim.openstreetmap.org/search'
+            params = {
+                'q': address,
+                'format': 'json',
+                'limit': 1,
+                'addressdetails': 0,
+            }
+            headers = {'User-Agent': 'MyMuralApp/1.0 (your_email@example.com)'}  # важен User-Agent!
+
+            response = requests.get(url, params=params, headers=headers, timeout=5)
+            response.raise_for_status()
+            data = response.json()
+
+            if data:
+                lat = float(data[0]['lat'])
+                lon = float(data[0]['lon'])
+                return lat, lon
+        except Exception as e:
+            print(f"Ошибка геокодирования: {e}")
+        return None, None
 
     def __str__(self):
         return self.title

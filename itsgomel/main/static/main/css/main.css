@@ -439,7 +439,7 @@ footer {
 
 .slider-track {
   display: flex;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease;
   gap: 20px;
   flex-shrink: 0; /* Чтобы трек не сжимался */
 }
@@ -449,4 +449,11 @@ footer {
   overflow: hidden;
   box-sizing: border-box;
   flex-shrink: 0; /* Важно! Не даём сжиматься */
+}
+
+.map {
+    height: 400px;
+    margin: 40px 0;
+    border-radius: 12px;
+    overflow: hidden;
 }

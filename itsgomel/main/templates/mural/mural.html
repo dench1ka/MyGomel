@@ -26,7 +26,7 @@
         {% for mural in murals %}
         <div class="mural-card">
             <h1>{{ mural.title }}</h1>
-            <img src="{{ mural.image.url }}" alt="Изображение мурала {{ mural.title }}">
+            <img src="{{ mural.image.url }}" alt="Изображение мурала {{ mural.title }}" loading="lazy">
             <div class="address">{{ mural.address }}</div>
             <a href="{% url 'mural_detail' mural.id %}">Подробнее</a>
         </div>
@@ -97,7 +97,58 @@
     <div id="suggest-response"></div>
 </section>
 
-<div class="map"></div>
+<div id="map" style="width: 100%; height: 500px;"></div>
+
+<script>
+ymaps.ready(function () {
+    var map = new ymaps.Map("map", {
+        center: [52.41, 31.00],
+        zoom: 12,
+        controls: ['zoomControl', 'fullscreenControl']
+    });
+
+    // Используем данные из JSON
+    var muralsData = JSON.parse('{{ murals_json|escapejs }}');
+    console.log('Total murals from JSON:', muralsData.length);
+
+    muralsData.forEach(function(mural) {
+        try {
+            var lat = parseFloat(mural.lat);
+            var lon = parseFloat(mural.lng);
+
+            if (!isNaN(lat) && !isNaN(lon)) {
+                var placemark = new ymaps.Placemark(
+                    [lat, lon],
+                    {
+                        balloonContent: [
+                            '<strong>' + mural.title + '</strong>',
+                            '<a href="/murals/' + mural.id + '/">Подробнее</a>'
+                        ].join('<br>'),
+                        hintContent: mural.title
+                    },
+                    {
+                        preset: 'islands#blueIcon'
+                    }
+                );
+                map.geoObjects.add(placemark);
+                console.log('Added marker:', mural.title);
+            } else {
+                console.error('Invalid coordinates:', mural.title, mural.lat, mural.lng);
+            }
+        } catch (e) {
+            console.error('Error processing mural:', mural.title, e);
+        }
+    });
+
+    // Автоматическое масштабирование
+    if (muralsData.length > 0) {
+        map.setBounds(map.geoObjects.getBounds(), {
+            checkZoomRange: true,
+            zoomMargin: 50
+        });
+    }
+});
+</script>
 
 <script>
 const track = document.querySelector('.slider-track');
@@ -105,12 +156,11 @@ const cards = document.querySelectorAll('.comments-card');
 const btnNext = document.getElementById('comments-next');
 const btnBack = document.getElementById('comments-back');
 
-const cardWidth = 240; // ширина карточки + margin (220 + 10*2)
-const visibleCards = 2; // показываем 2 карточки
-const step = 2; // прокручиваем сразу 2 карточки (один «экран»)
-let position = 0; // позиция сдвига в карточках
+const cardWidth = 240;
+const visibleCards = 2;
+const step = 2;
+let position = 0;
 
-// Считаем максимальное количество "экранов" (пар карточек)
 const maxPosition = Math.ceil(cards.length / visibleCards) - 1;
 
 function updateButtons() {
@@ -136,43 +186,41 @@ btnBack.addEventListener('click', () => slide(-1));
 
 updateButtons();
 
+let offset = {{ initial_offset }};
+const btn = document.getElementById('see-more-btn');
+const container = document.getElementById('mural-cards');
 
-
-    let offset = {{ initial_offset }};
-    const btn = document.getElementById('see-more-btn');
-    const container = document.getElementById('mural-cards');
-
-    btn.addEventListener('click', () => {
-        fetch(`?offset=${offset}`, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
+btn.addEventListener('click', () => {
+    fetch(`?offset=${offset}`, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.murals.length === 0) {
+                btn.style.display = 'none';
+                return;
             }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.murals.length === 0) {
-                    btn.style.display = 'none'; // Скрываем кнопку, если муралов больше нет
-                    return;
-                }
-                data.murals.forEach(mural => {
-                    const card = document.createElement('div');
-                    card.classList.add('mural-card');
-                    card.innerHTML = `
+            data.murals.forEach(mural => {
+                const card = document.createElement('div');
+                card.classList.add('mural-card');
+                card.innerHTML = `
                     <h1>${mural.title}</h1>
                     <img src="${mural.image_url}" alt="Изображение мурала ${mural.title}">
                     <div class="address">${mural.address}</div>
                     <a href="/murals/${mural.id}/">Подробнее</a>
                 `;
-                    container.appendChild(card);
-                });
-                offset += data.murals.length;
-            })
-            .catch(error => {
-                console.error('Ошибка при загрузке муралов:', error);
+                container.appendChild(card);
             });
-    });
+            offset += data.murals.length;
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке муралов:', error);
+        });
+});
 
-    document.getElementById('suggest-form').addEventListener('submit', function (e) {
+document.getElementById('suggest-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
     const form = e.target;
@@ -189,17 +237,17 @@ updateButtons();
     .then(response => response.json())
     .then(data => {
         const responseDiv = document.getElementById('suggest-response');
-        if (data.status === 'success') {
-            responseDiv.innerHTML = `<p style="color: green;">${data.message}</p>`;
+        if (data.success) {
+            responseDiv.textContent = 'Спасибо за предложение! Мы свяжемся с вами.';
             form.reset();
         } else {
-            responseDiv.innerHTML = `<p style="color: red;">${data.message}</p>`;
+            responseDiv.textContent = 'Ошибка: ' + (data.error || 'Неверные данные.');
         }
     })
     .catch(error => {
-        console.error('Ошибка при отправке предложения:', error);
-        document.getElementById('suggest-response').innerHTML = `<p style="color: red;">Произошла ошибка.</p>`;
+        console.error('Ошибка при отправке формы:', error);
     });
 });
 </script>
+
 {% endblock %}
