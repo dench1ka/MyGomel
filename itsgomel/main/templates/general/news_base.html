@@ -1,0 +1,12 @@
+{% extends 'general/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'news/css/news_style.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="news-section">
+    {% block news_content %}{% endblock %}
+</section>
+{% endblock %}

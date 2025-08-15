@@ -1,0 +1,31 @@
+{% extends 'general/news_base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="news-section">
+    <h1>Новости</h1>
+
+    <div class="cards-container">
+        {% for item in news_list %}
+        <div class="card">
+            <a href="{% url 'news_detail' item.pk %}" class="card-link">
+                {% if item.images.first %}
+                    <img src="{{ item.images.first.image.url }}" alt="{{ item.title }}">
+                {% else %}
+                    <img src="{% static 'img/no-image.jpg' %}" alt="Нет изображения">
+                {% endif %}
+                <div class="card-title">{{ item.title }}</div>
+            </a>
+            <div class="card-content">
+                <div class="card-meta">{{ item.date|date:"d.m.Y H:i" }}</div>
+                <div class="card-description">
+                    {{ item.description|slice:":100" }}{% if item.description|length > 100 %}...{% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>Новостей пока нет.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

@@ -26,7 +26,7 @@
         {% for mural in murals %}
         <div class="mural-card">
             <h1>{{ mural.title }}</h1>
-            <img src="{{ mural.image.url }}" alt="Изображение мурала {{ mural.title }}">
+            <img src="{{ mural.image.url }}" alt="Изображение мурала {{ mural.title }}" loading="lazy">
             <div class="address">{{ mural.address }}</div>
             <a href="{% url 'mural_detail' mural.id %}">Подробнее</a>
         </div>
@@ -39,109 +39,215 @@
     <h1>Комментарии горожан</h1>
     <div class="comments">
         <div class="comments-arrow" id="comments-back">
-            <img src="{% static 'general/img/arrow.svg' %}" alt="back">
+            <img src="{% static 'general/img/arrow.svg' %}" alt="Назад">
         </div>
-        <div class="comments-cards">
-            <div class="comments-card">
-                <p>Иван Иванович</p> <!-- Имя горожанина -->
-                <hr>
-                <p>Отлично! Долго этого ждал. Отлично! Долго этого ждал.Отлично! Долго этого ждал.</p>
-                <!--  Комментарий -->
-            </div>
-        </div>
-        <div class="comments-cards">
-            <div class="comments-card">
-                <p>Иван Иванович</p> <!-- Имя горожанина -->
-                <hr>
-                <p>Отлично! Долго этого ждал. Отлично! Долго этого ждал.Отлично! Долго этого ждал.</p>
-                <!--  Комментарий -->
-            </div>
-        </div>
-        <div class="comments-cards">
-            <div class="comments-card">
-                <p>Иван Иванович</p> <!-- Имя горожанина -->
-                <hr>
-                <p>Отлично! Долго этого ждал. Отлично! Долго этого ждал.Отлично! Долго этого ждал.</p>
-                <!--  Комментарий -->
+
+        <div class="slider-window">
+            <div class="slider-track">
+                {% for comment in comments %}
+                <div class="comments-card">
+                    <p>{{ comment.name }}</p>
+                    <hr>
+                    <p>{{ comment.text }}</p>
+                </div>
+                {% endfor %}
             </div>
         </div>
 
         <div class="comments-arrow" id="comments-next">
-            <img src="{% static 'general/img/arrow.svg' %}" alt="next">
+            <img src="{% static 'general/img/arrow.svg' %}" alt="Вперед">
         </div>
     </div>
 </section>
 
 <section class="murals-offers">
     <h1>Хотите мурал в своём районе?</h1>
-    <h4>У вас есть идея для нового мурала в вашем городе? Поделитесь ею — и, возможно, она станет частью городского
-        искусства!</h4>
-    <div class="offer-form">
-        <div class="offer-form">
-            <div class="form-row">
-                <label for="new-name">Ваше имя*</label>
-                <input type="text" id="new-name">
-            </div>
+    <h4>У вас есть идея для нового мурала в вашем городе? Поделитесь ею — и, возможно, она станет частью городского искусства!</h4>
 
-            <div class="form-row">
-                <label for="new-email">email*</label>
-                <input type="email" id="new-email">
-            </div>
-
-            <div class="form-row">
-                <label for="new-address">Адрес мурала*</label>
-                <input type="text" id="new-address">
-            </div>
-
-            <div class="form-row">
-                <label for="new-short-descp">Описание мурала*</label>
-                <input type="text" id="new-short-descp">
-            </div>
-
-            <div class="form-row">
-                <label for="mural-file">Фото/видео мурала</label>
-                <input type="file" id="mural-file">
-            </div>
+    <form id="suggest-form" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <div class="form-row">
+            <label for="new-name">Ваше имя*</label>
+            <input type="text" id="new-name" name="name" required>
         </div>
-    </div>
-    <button class="send">Отправить</button>
+
+        <div class="form-row">
+            <label for="new-email">email*</label>
+            <input type="email" id="new-email" name="email" required>
+        </div>
+
+        <div class="form-row">
+            <label for="new-address">Адрес мурала*</label>
+            <input type="text" id="new-address" name="address" required>
+        </div>
+
+        <div class="form-row">
+            <label for="new-short-descp">Описание мурала*</label>
+            <input type="text" id="new-short-descp" name="description" required>
+        </div>
+
+        <div class="form-row">
+            <label for="mural-file">Фото/видео мурала</label>
+            <input type="file" id="mural-file" name="file">
+        </div>
+
+        <button type="submit" class="send">Отправить</button>
+    </form>
+
+    <div id="suggest-response"></div>
 </section>
 
-<div class="map"></div>
+<div id="map" style="width: 100%; height: 500px;"></div>
 
 <script>
-    let offset = {{ initial_offset }};
-    const btn = document.getElementById('see-more-btn');
-    const container = document.getElementById('mural-cards');
+ymaps.ready(function () {
+    var map = new ymaps.Map("map", {
+        center: [52.41, 31.00],
+        zoom: 12,
+        controls: ['zoomControl', 'fullscreenControl']
+    });
 
-    btn.addEventListener('click', () => {
-        fetch(`?offset=${offset}`, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
+    // Используем данные из JSON
+    var muralsData = JSON.parse('{{ murals_json|escapejs }}');
+    console.log('Total murals from JSON:', muralsData.length);
+
+    muralsData.forEach(function(mural) {
+        try {
+            var lat = parseFloat(mural.lat);
+            var lon = parseFloat(mural.lng);
+
+            if (!isNaN(lat) && !isNaN(lon)) {
+                var placemark = new ymaps.Placemark(
+                    [lat, lon],
+                    {
+                        balloonContent: [
+                            '<strong>' + mural.title + '</strong>',
+                            '<a href="/murals/' + mural.id + '/">Подробнее</a>'
+                        ].join('<br>'),
+                        hintContent: mural.title
+                    },
+                    {
+                        preset: 'islands#blueIcon'
+                    }
+                );
+                map.geoObjects.add(placemark);
+                console.log('Added marker:', mural.title);
+            } else {
+                console.error('Invalid coordinates:', mural.title, mural.lat, mural.lng);
             }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.murals.length === 0) {
-                    btn.style.display = 'none'; // Скрываем кнопку, если муралов больше нет
-                    return;
-                }
-                data.murals.forEach(mural => {
-                    const card = document.createElement('div');
-                    card.classList.add('mural-card');
-                    card.innerHTML = `
+        } catch (e) {
+            console.error('Error processing mural:', mural.title, e);
+        }
+    });
+
+    // Автоматическое масштабирование
+    if (muralsData.length > 0) {
+        map.setBounds(map.geoObjects.getBounds(), {
+            checkZoomRange: true,
+            zoomMargin: 50
+        });
+    }
+});
+</script>
+
+<script>
+const track = document.querySelector('.slider-track');
+const cards = document.querySelectorAll('.comments-card');
+const btnNext = document.getElementById('comments-next');
+const btnBack = document.getElementById('comments-back');
+
+const cardWidth = 240;
+const visibleCards = 2;
+const step = 2;
+let position = 0;
+
+const maxPosition = Math.ceil(cards.length / visibleCards) - 1;
+
+function updateButtons() {
+  btnBack.style.opacity = position <= 0 ? "0.3" : "1";
+  btnBack.style.pointerEvents = position <= 0 ? "none" : "auto";
+
+  btnNext.style.opacity = position >= maxPosition ? "0.3" : "1";
+  btnNext.style.pointerEvents = position >= maxPosition ? "none" : "auto";
+}
+
+function slide(dir) {
+  position += dir;
+
+  if (position < 0) position = 0;
+  if (position > maxPosition) position = maxPosition;
+
+  track.style.transform = `translateX(-${position * visibleCards * cardWidth}px)`;
+  updateButtons();
+}
+
+btnNext.addEventListener('click', () => slide(1));
+btnBack.addEventListener('click', () => slide(-1));
+
+updateButtons();
+
+let offset = {{ initial_offset }};
+const btn = document.getElementById('see-more-btn');
+const container = document.getElementById('mural-cards');
+
+btn.addEventListener('click', () => {
+    fetch(`?offset=${offset}`, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.murals.length === 0) {
+                btn.style.display = 'none';
+                return;
+            }
+            data.murals.forEach(mural => {
+                const card = document.createElement('div');
+                card.classList.add('mural-card');
+                card.innerHTML = `
                     <h1>${mural.title}</h1>
                     <img src="${mural.image_url}" alt="Изображение мурала ${mural.title}">
                     <div class="address">${mural.address}</div>
                     <a href="/murals/${mural.id}/">Подробнее</a>
                 `;
-                    container.appendChild(card);
-                });
-                offset += data.murals.length;
-            })
-            .catch(error => {
-                console.error('Ошибка при загрузке муралов:', error);
+                container.appendChild(card);
             });
+            offset += data.murals.length;
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке муралов:', error);
+        });
+});
+
+document.getElementById('suggest-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    fetch("{% url 'suggest_mural' %}", {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value,
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        const responseDiv = document.getElementById('suggest-response');
+        if (data.success) {
+            responseDiv.textContent = 'Спасибо за предложение! Мы свяжемся с вами.';
+            form.reset();
+        } else {
+            responseDiv.textContent = 'Ошибка: ' + (data.error || 'Неверные данные.');
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка при отправке формы:', error);
     });
+});
 </script>
+
 {% endblock %}

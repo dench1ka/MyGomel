@@ -288,17 +288,21 @@ footer {
     font-family: 'Roboto', sans-serif;
     color: #1F3D1F;
     border-radius: 30px;
-    font-size: 24px
+    font-size: 24px;
+    text-align: center;
 }
 
 .comments {
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background-color: #b8d8a7;
+  padding: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  flex-wrap: nowrap; /* Чтобы не переносились */
 }
 
 .comments-arrow { 
@@ -333,18 +337,15 @@ footer {
     align-items: center;
 }
 
-.comments-card {
-    width: 100%;
-    height: auto;
-    max-height: 300px;
-    padding: 20px;
-    background-color: #7BAE7F;
-    border-radius: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: start;
-    gap: 10px;
+
+.comments-card p {
+    margin: 5px 0;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* показывать только 2 строки */
+    -webkit-box-orient: vertical;
 }
 
 .comments-card > hr {
@@ -396,6 +397,7 @@ footer {
     flex-direction: row;
     justify-content: space-between;
     gap: 15px;
+    margin-bottom: 10px;
 }
 
 .form-row label {
@@ -417,4 +419,41 @@ footer {
     background-color: #d9d9d9;
 }
 
+.comments-card {
+  flex: 0 0 220px; /* фиксированная ширина */
+  margin: 0;
+  padding: 10px;
+  border-radius: 10px;
+  background: #f0f0f0;
+  box-sizing: border-box;
 
+  /* Эти строчки важны для переноса длинных слов */
+  overflow-wrap: break-word; /* стандартное современное свойство */
+  word-wrap: break-word; /* для старых браузеров */
+  word-break: break-word; /* или word-break: break-all; — более жёсткий перенос */
+
+  /* Чтобы текст не вылазил за границы */
+  overflow: hidden;
+}
+
+
+.slider-track {
+  display: flex;
+  transition: transform 0.4s ease;
+  gap: 20px;
+  flex-shrink: 0; /* Чтобы трек не сжимался */
+}
+
+.slider-window {
+  width: 460px; /* 2 * 220 + 20 gap */
+  overflow: hidden;
+  box-sizing: border-box;
+  flex-shrink: 0; /* Важно! Не даём сжиматься */
+}
+
+.map {
+    height: 400px;
+    margin: 40px 0;
+    border-radius: 12px;
+    overflow: hidden;
+}
