@@ -1,0 +1,94 @@
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 колонки на больших экранах */
+    gap: 30px;
+    padding: 20px 15px 15px 15px;
+}
+
+.card,
+.card * {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px 15px 6px 15px;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.card img {
+    display: block; /* убираем отступ как у inline-элемента */
+    margin-bottom: 10px;
+    padding: 0;
+    width: 100%;
+    height: 200px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.card-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    margin: 10px 0 6px 0;
+}
+
+.card-meta {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.card-description {
+    font-size: 15px;
+    color: #444;
+    margin-bottom: 12px;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.news-detail .back-to-news {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: #0ABAB5;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.news-detail .back-to-news:hover {
+    text-decoration: underline;
+}

@@ -62,3 +62,18 @@ class MuralSuggestion(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.address}"
+
+class News(models.Model):
+    title = models.CharField("Название новости", max_length=255)
+    description = models.TextField("Описание новости")
+    date = models.DateTimeField("Дата публикации", auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+class NewsImage(models.Model):
+    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField("Изображение", upload_to="news_images/")
+
+    def __str__(self):
+        return f"Изображение для {self.news.title}"

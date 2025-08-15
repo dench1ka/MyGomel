@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Mural, Comment, MuralSuggestion
+from .models import Mural, Comment, MuralSuggestion, News, NewsImage
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.core.serializers.json import DjangoJSONEncoder
@@ -113,3 +113,11 @@ def suggest_mural(request):
         return JsonResponse({'status': 'success', 'message': 'Предложение успешно отправлено'})
 
     return JsonResponse({'status': 'error', 'message': 'Метод не поддерживается'}, status=405)
+
+def news_list(request):
+    news_list = News.objects.order_by('-date')
+    return render(request, 'news/news.html', {'news_list': news_list})
+
+def news_detail(request, pk):
+    news = get_object_or_404(News, pk=pk)
+    return render(request, 'news/news_detail.html', {'news': news})

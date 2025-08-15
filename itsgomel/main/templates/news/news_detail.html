@@ -1,0 +1,20 @@
+{% extends 'general/news_base.html' %}
+{% load static %}
+
+{% block title %}{{ news.title }}{% endblock %}
+
+{% block news_content %}
+<section class="news-detail">
+    <!-- Ссылка для возврата к списку новостей -->
+    <a href="{% url 'news_list' %}" class="back-to-news">&larr; Все новости</a>
+
+    <h1>{{ news.title }}</h1>
+    <div class="news-images">
+        {% for img in news.images.all %}
+            <img src="{{ img.image.url }}" alt="{{ news.title }}">
+        {% endfor %}
+    </div>
+    <p>{{ news.description|linebreaks }}</p>
+    <span class="news-date">{{ news.date|date:"d.m.Y H:i" }}</span>
+</section>
+{% endblock %}

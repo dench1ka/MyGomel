@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Mural, Comment, MuralSuggestion
+from .models import Mural, Comment, MuralSuggestion, NewsImage, News
 
 # Register your models here.
 @admin.register(Mural)
@@ -18,3 +18,16 @@ class CommentAdmin(admin.ModelAdmin):
 class MuralSuggestionAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'address', 'created_at')
     readonly_fields = ('created_at',)
+
+class NewsImageInline(admin.TabularInline):
+    model = NewsImage
+    extra = 1
+
+@admin.register(News)
+class NewsAdmin(admin.ModelAdmin):
+    list_display = ("title", "date")
+    inlines = [NewsImageInline]
+
+@admin.register(NewsImage)
+class NewsImageAdmin(admin.ModelAdmin):
+    list_display = ("news", "image")
