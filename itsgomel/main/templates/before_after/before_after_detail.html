@@ -1,0 +1,19 @@
+{% extends 'general/before_after_base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="before_after-detail">
+    <h1>{{ gallery.title }}</h1>
+    <p>{{ gallery.description }}</p>
+
+    <div class="comparison-container">
+        <img src="{{ gallery.before_image.url }}" alt="До" draggable="false">
+        <div class="comparison-resize">
+            <img src="{{ gallery.after_image.url }}" alt="После" draggable="false">
+        </div>
+        <div class="comparison-handle"></div>
+    </div>
+</section>
+
+<script src="{% static 'before_after/js/before_after.js' %}"></script>
+{% endblock %}

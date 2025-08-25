@@ -1,0 +1,27 @@
+{% extends 'general/before_after_base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="before_after-section">
+    <h1>До и После</h1>
+
+    <div class="cards-container">
+        {% for item in galleries %}
+        <div class="card">
+            <a href="{% url 'before_after_detail' item.pk %}" class="card-link">
+                <img src="{{ item.before_image.url }}" alt="{{ item.title }}">
+                <div class="card-title">{{ item.title }}</div>
+            </a>
+            <div class="card-content">
+                <div class="card-meta">{{ item.date|date:"d.m.Y H:i" }}</div>
+                <div class="card-description">
+                    {{ item.description|slice:":100" }}{% if item.description|length > 100 %}...{% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>Пока нет загруженных галерей.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

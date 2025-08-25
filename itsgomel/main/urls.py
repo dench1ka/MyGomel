@@ -12,6 +12,8 @@ urlpatterns = [
     path('suggest_mural/', views.suggest_mural, name='suggest_mural'),
     path('news/', views.news_list, name='news_list'),
     path('news/<int:pk>/', views.news_detail, name='news_detail'),
+    path('before_after/', views.before_after_list, name='before_after_list'),
+    path('before_after/<int:pk>/', views.before_after_detail, name='before_after_detail'),
 ]
 
 if settings.DEBUG:
