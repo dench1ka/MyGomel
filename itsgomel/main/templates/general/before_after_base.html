@@ -1,0 +1,12 @@
+{% extends 'general/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'before_after/css/before_after_style.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="before_after-section">
+    {% block before_after_content %}{% endblock %}
+</section>
+{% endblock %}

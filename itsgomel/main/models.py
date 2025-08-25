@@ -77,3 +77,13 @@ class NewsImage(models.Model):
 
     def __str__(self):
         return f"Изображение для {self.news.title}"
+
+class ImprovementGallery(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    before_image = models.ImageField(upload_to="gallery/before/")
+    after_image = models.ImageField(upload_to="gallery/after/")
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Mural, Comment, MuralSuggestion, NewsImage, News
+from .models import Mural, Comment, MuralSuggestion, NewsImage, News, ImprovementGallery
 
 # Register your models here.
 @admin.register(Mural)
@@ -31,3 +31,9 @@ class NewsAdmin(admin.ModelAdmin):
 @admin.register(NewsImage)
 class NewsImageAdmin(admin.ModelAdmin):
     list_display = ("news", "image")
+
+@admin.register(ImprovementGallery)
+class ImprovementGalleryAdmin(admin.ModelAdmin):
+    list_display = ("title", "date")
+    search_fields = ("title", "description")
+    list_filter = ("date",)
