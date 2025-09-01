@@ -93,6 +93,22 @@ class CollegeImage(models.Model):
     def __str__(self):
         return f"Изображение для {self.college_news.title}"
 
+class History(models.Model):
+    title = models.CharField("Название исторического места/события", max_length=255)
+    description = models.TextField("Описание места/события")
+    date = models.DateTimeField("Дата события", auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+class HistoryImage(models.Model):
+    history = models.ForeignKey(History, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField("Изображение", upload_to="history_images/")
+
+    def __str__(self):
+        return f"Изображение для {self.history.title}"
+
+
 class ImprovementGallery(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)

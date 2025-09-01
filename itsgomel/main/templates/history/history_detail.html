@@ -1,0 +1,26 @@
+{% extends 'general/history_base.html' %}
+{% load static %}
+
+{% block title %}{{ history.title }}{% endblock %}
+
+{% block history_content %}
+<section class="history-detail">
+    <a href="{% url 'history_list' %}" class="back-to-news">&larr; Все новости</a>
+    <h1>{{ history.title }}</h1>
+
+    <div class="history-images">
+        {% for img in history.images.all %}
+            <img src="{{ img.image.url }}" alt="{{ history.title }}">
+        {% endfor %}
+        <button class="slider-prev">←</button>
+        <button class="slider-next">→</button>
+    </div>
+
+    <div class="history-description">
+        <p>{{ history.description|linebreaks }}</p>
+    </div>
+    <span class="history-date">{{ history.date|date:"d.m.Y H:i" }}</span>
+</section>
+
+<script src="{% static 'history/js/history.js' %}"></script>
+{% endblock %}

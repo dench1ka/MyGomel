@@ -16,6 +16,8 @@ urlpatterns = [
     path('before_after/<int:pk>/', views.before_after_detail, name='before_after_detail'),
     path('college/', views.college_list, name='college_list'),
     path('college/<int:pk>/', views.college_detail, name='college_detail'),
+    path('history/', views.history_list, name='history_list'),
+    path('history/<int:pk>/', views.history_detail, name='history_detail'),
 ]
 
 if settings.DEBUG:
