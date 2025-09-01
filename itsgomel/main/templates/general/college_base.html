@@ -1,0 +1,12 @@
+{% extends 'general/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'college/css/college_style.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="college-section">
+    {% block college_content %}{% endblock %}
+</section>
+{% endblock %}

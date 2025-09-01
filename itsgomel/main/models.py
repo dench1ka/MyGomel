@@ -78,6 +78,21 @@ class NewsImage(models.Model):
     def __str__(self):
         return f"Изображение для {self.news.title}"
 
+class College(models.Model):
+    title = models.CharField("Название события", max_length=255)
+    description = models.TextField("Описание события")
+    date = models.DateTimeField("Дата события", auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+class CollegeImage(models.Model):
+    college_news = models.ForeignKey(College, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField("Изображение", upload_to="college_images/")
+
+    def __str__(self):
+        return f"Изображение для {self.college_news.title}"
+
 class ImprovementGallery(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)

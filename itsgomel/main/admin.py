@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Mural, Comment, MuralSuggestion, NewsImage, News, ImprovementGallery
+from .models import Mural, Comment, MuralSuggestion, NewsImage, News, ImprovementGallery, College, CollegeImage
 
 # Register your models here.
 @admin.register(Mural)
@@ -31,6 +31,19 @@ class NewsAdmin(admin.ModelAdmin):
 @admin.register(NewsImage)
 class NewsImageAdmin(admin.ModelAdmin):
     list_display = ("news", "image")
+
+class CollegeImageInline(admin.TabularInline):
+    model = CollegeImage
+    extra = 1
+
+@admin.register(College)
+class CollegeAdmin(admin.ModelAdmin):
+    list_display = ("title", "date")
+    inlines = [CollegeImageInline]
+
+@admin.register(CollegeImage)
+class CollegeImageAdmin(admin.ModelAdmin):
+    list_display = ("college_news", "image")
 
 @admin.register(ImprovementGallery)
 class ImprovementGalleryAdmin(admin.ModelAdmin):
