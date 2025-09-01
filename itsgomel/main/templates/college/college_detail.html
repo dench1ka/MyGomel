@@ -1,0 +1,26 @@
+{% extends 'general/college_base.html' %}
+{% load static %}
+
+{% block title %}{{ news.title}}{% endblock %}
+
+{% block college_content %}
+<section class="college-detail">
+    <a href="{% url 'college_list' %}" class="back-to-news">&larr; Вернуться назад</a>
+    <h1>{{ college.title }}</h1>
+
+    <div class="college-images">
+        {% for img in college.images.all %}
+            <img src="{{ img.image.url}}" alt="{{college.title}}">
+        {% endfor %}
+        <button class="slider-prev">←</button>
+        <button class="slider-next">→</button>
+    </div>
+
+    <div class="college-description">
+        <p>{{ college.description|linebreaks }}</p>
+    </div>
+    <span class="college-date">{{ college.date|date:"d.m.Y H:i" }}</span>
+</section>
+
+<script src="{% static 'college/js/college.js' %}"></script>
+{% endblock %}

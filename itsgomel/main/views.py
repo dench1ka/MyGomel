@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Mural, Comment, MuralSuggestion, News, NewsImage, ImprovementGallery
+from .models import Mural, Comment, MuralSuggestion, News, NewsImage, ImprovementGallery, College, CollegeImage
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.core.serializers.json import DjangoJSONEncoder
@@ -121,6 +121,14 @@ def news_list(request):
 def news_detail(request, pk):
     news = get_object_or_404(News, pk=pk)
     return render(request, 'news/news_detail.html', {'news': news})
+
+def college_list(request):
+    college_list = College.objects.order_by('-date')
+    return render(request, 'college/college.html', {'college_list': college_list})
+
+def college_detail(request, pk):
+    college = get_object_or_404(College, pk=pk)
+    return render(request, 'college/college_detail.html', {'college': college})
 
 def before_after_list(request):
     galleries = ImprovementGallery.objects.order_by('-date')

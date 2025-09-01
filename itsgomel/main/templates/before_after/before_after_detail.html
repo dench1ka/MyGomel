@@ -3,8 +3,9 @@
 
 {% block content %}
 <section class="before_after-detail">
+  <a href="{% url 'before_after_list' %}" class="back-to-ba">&larr; Назад</a>
     <h1>{{ gallery.title }}</h1>
-    <p>{{ gallery.description }}</p>
+
 
     <div class="comparison-container">
         <img src="{{ gallery.before_image.url }}" alt="До" draggable="false">
@@ -12,6 +13,9 @@
             <img src="{{ gallery.after_image.url }}" alt="После" draggable="false">
         </div>
         <div class="comparison-handle"></div>
+    </div>
+    <div class="gallery-description">
+        <p>{{ gallery.description|linebreaks }}</p>
     </div>
 </section>
 
