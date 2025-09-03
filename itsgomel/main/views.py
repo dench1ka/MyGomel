@@ -145,3 +145,24 @@ def before_after_list(request):
 def before_after_detail(request, pk):
     gallery = get_object_or_404(ImprovementGallery, pk=pk)
     return render(request, 'before_after/before_after_detail.html', {'gallery': gallery})
+
+def college_events(request):
+    events = College.objects.filter(category="college")
+    return render(request, 'college/category_list.html', {
+        'college_list': events,
+        'page_title': "Мероприятия в колледже"
+    })
+
+def dorm_events(request):
+    events = College.objects.filter(category="dorm")
+    return render(request, 'college/category_list.html', {
+        'college_list': events,
+        'page_title': "Мероприятия в общежитии"
+    })
+
+def cultural_events(request):
+    events = College.objects.filter(category="cultural")
+    return render(request, 'college/category_list.html', {
+        'college_list': events,
+        'page_title': "Культурные мероприятия"
+    })

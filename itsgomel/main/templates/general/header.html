@@ -1,12 +1,25 @@
 {% load static %}
 
 <section class="navigation">
-    <a href="{% url 'home' %}"><img src="{% static 'general/img/logo.svg' %}" alt="Logo" class="logo"></a>
+    <a href="{% url 'home' %}">
+        <img src="{% static 'general/img/logo.svg' %}" alt="Logo" class="logo">
+    </a>
     <div class="nav-btns">
+
         <a href="{% url 'murals' %}">Муралы</a>
         <a href="{% url 'before_after_list' %}">Гомель до/после</a>
         <a href="{% url 'history_list' %}">История</a>
         <a href="{% url 'news_list' %}">Блог</a>
-        <a href="{% url 'college_list' %}">Колледж</a>
+
+
+        <div class="dropdown">
+<!--            <p>Колледж</p>-->
+            <a href="{% url 'college_list' %}">Колледж</a>
+            <div class="dropdown-content">
+                <a href="{% url 'college_events' %}">Мероприятия в колледже</a>
+                <a href="{% url 'dorm_events' %}">Мероприятия в общежитии</a>
+                <a href="{% url 'cultural_events' %}">Культурные мероприятия</a>
+            </div>
+        </div>
     </div>
 </section>

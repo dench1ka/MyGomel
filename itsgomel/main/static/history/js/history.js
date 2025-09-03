@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+
     const slider = document.querySelector('.history-images');
     if (!slider) return;
 
@@ -12,6 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const prevBtn = slider.querySelector('.slider-prev');
     const nextBtn = slider.querySelector('.slider-next');
+
+    if (slides.length <= 1) {
+        prevBtn.style.display = "none";
+        nextBtn.style.display = "none";
+        return;
+    }
 
     function showSlide(index) {
         slides.forEach((slide, i) => {
