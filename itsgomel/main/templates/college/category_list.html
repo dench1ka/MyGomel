@@ -3,8 +3,7 @@
 
 {% block content %}
 <section class="college-section">
-<!--    <h1>Благоустройство УО”ГГМК”</h1>-->
-    <h1>Гомельский государственный машиностроительный колледж</h1>
+    <h1>{{ page_title }}</h1>
 
     <div class="cards-container">
         {% for item in college_list %}
@@ -15,13 +14,12 @@
                 {% else %}
                     <img src="{% static 'img/no-image.jpg' %}" alt="Нет изображения">
                 {% endif %}
-                <div class="card-title">{{ item.title}}</div>
+                <div class="card-title">{{ item.title }}</div>
             </a>
             <div class="card-content">
                 <div class="card-meta">{{ item.date|date:"d.m.Y H:i" }}</div>
                 <div class="card-description">
                     {{ item.description|slice:":100" }}{% if item.description|length > 100 %}...{% endif %}
-
                 </div>
             </div>
         </div>

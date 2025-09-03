@@ -68,6 +68,18 @@ footer {
     font: 500 24px 'Roboto', sans-serif;
 }
 
+.dropdown > p {
+    text-decoration: none;
+    color: #1F3D1F;
+    font: 500 24px 'Roboto', sans-serif;
+}
+
+.dropdown > a {
+    text-decoration: none;
+    color: #1F3D1F;
+    font: 500 24px 'Roboto', sans-serif;
+}
+
 .logo {
   max-height: 90px;
   object-fit: contain;
@@ -459,3 +471,34 @@ footer {
     border-radius: 12px;
     overflow: hidden;
 }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display:none;
+    position: absolute;
+    background-color: white;
+    min-width: 180px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px 15px;
+    color: black;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content{
+    display: block;
+}
+

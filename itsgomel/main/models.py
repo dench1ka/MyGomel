@@ -79,12 +79,19 @@ class NewsImage(models.Model):
         return f"Изображение для {self.news.title}"
 
 class College(models.Model):
+    CATEGORY_CHOICES = [
+        ("college", "Мероприятия в колледже"),
+        ("dorm", "Мероприятия в общежитии"),
+        ("cultural", "Культурные мероприятия"),
+    ]
     title = models.CharField("Название события", max_length=255)
     description = models.TextField("Описание события")
+    category = models.CharField("Категория", max_length=20, choices=CATEGORY_CHOICES, default="college")
     date = models.DateTimeField("Дата события", auto_now_add=True)
 
     def __str__(self):
         return self.title
+
 
 class CollegeImage(models.Model):
     college_news = models.ForeignKey(College, on_delete=models.CASCADE, related_name="images")
@@ -92,6 +99,22 @@ class CollegeImage(models.Model):
 
     def __str__(self):
         return f"Изображение для {self.college_news.title}"
+
+class History(models.Model):
+    title = models.CharField("Название исторического места/события", max_length=255)
+    description = models.TextField("Описание места/события")
+    date = models.DateTimeField("Дата события", auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+class HistoryImage(models.Model):
+    history = models.ForeignKey(History, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField("Изображение", upload_to="history_images/")
+
+    def __str__(self):
+        return f"Изображение для {self.history.title}"
+
 
 class ImprovementGallery(models.Model):
     title = models.CharField(max_length=255)

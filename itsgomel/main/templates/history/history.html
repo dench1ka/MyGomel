@@ -1,15 +1,14 @@
-{% extends 'general/college_base.html' %}
+{% extends 'general/history_base.html' %}
 {% load static %}
 
 {% block content %}
-<section class="college-section">
-<!--    <h1>Благоустройство УО”ГГМК”</h1>-->
-    <h1>Гомельский государственный машиностроительный колледж</h1>
+<section class="history-section">
+    <h1>История Гомеля</h1>
 
     <div class="cards-container">
-        {% for item in college_list %}
+        {% for item in history_list %}
         <div class="card">
-            <a href="{% url 'college_detail' item.pk %}" class="card-link">
+            <a href="{% url 'history_detail' item.pk %}" class="card-link">
                 {% if item.images.first %}
                     <img src="{{ item.images.first.image.url }}" alt="{{ item.title }}">
                 {% else %}

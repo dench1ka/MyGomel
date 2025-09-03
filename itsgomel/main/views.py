@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Mural, Comment, MuralSuggestion, News, NewsImage, ImprovementGallery, College, CollegeImage
+from .models import Mural, Comment, MuralSuggestion, News, NewsImage, ImprovementGallery, College, CollegeImage, HistoryImage, History
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.core.serializers.json import DjangoJSONEncoder
@@ -130,6 +130,14 @@ def college_detail(request, pk):
     college = get_object_or_404(College, pk=pk)
     return render(request, 'college/college_detail.html', {'college': college})
 
+def history_list(request):
+    history_list = History.objects.order_by('-date')
+    return render(request, 'history/history.html', {'history_list': history_list})
+
+def history_detail(request, pk):
+    history = get_object_or_404(History, pk=pk)
+    return render(request, 'history/history_detail.html', {'history': history})
+
 def before_after_list(request):
     galleries = ImprovementGallery.objects.order_by('-date')
     return render(request, 'before_after/before_after.html', {'galleries': galleries})
@@ -137,3 +145,24 @@ def before_after_list(request):
 def before_after_detail(request, pk):
     gallery = get_object_or_404(ImprovementGallery, pk=pk)
     return render(request, 'before_after/before_after_detail.html', {'gallery': gallery})
+
+def college_events(request):
+    events = College.objects.filter(category="college")
+    return render(request, 'college/category_list.html', {
+        'college_list': events,
+        'page_title': "Мероприятия в колледже"
+    })
+
+def dorm_events(request):
+    events = College.objects.filter(category="dorm")
+    return render(request, 'college/category_list.html', {
+        'college_list': events,
+        'page_title': "Мероприятия в общежитии"
+    })
+
+def cultural_events(request):
+    events = College.objects.filter(category="cultural")
+    return render(request, 'college/category_list.html', {
+        'college_list': events,
+        'page_title': "Культурные мероприятия"
+    })

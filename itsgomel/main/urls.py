@@ -15,7 +15,12 @@ urlpatterns = [
     path('before_after/', views.before_after_list, name='before_after_list'),
     path('before_after/<int:pk>/', views.before_after_detail, name='before_after_detail'),
     path('college/', views.college_list, name='college_list'),
+    path('college/college_events/', views.college_events, name='college_events'),
+    path('college/dorm_events/', views.dorm_events, name='dorm_events'),
+    path('college/cultural_events/', views.cultural_events, name='cultural_events'),
     path('college/<int:pk>/', views.college_detail, name='college_detail'),
+    path('history/', views.history_list, name='history_list'),
+    path('history/<int:pk>/', views.history_detail, name='history_detail'),
 ]
 
 if settings.DEBUG:
