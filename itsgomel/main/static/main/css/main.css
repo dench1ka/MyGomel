@@ -539,3 +539,19 @@ form > button {
     border: none;
     cursor: pointer;
 }
+
+#suggest-form {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;   
+}
+
+.custom-file::file-selector-button {
+  display: none;
+}
+
+.custom-file::-webkit-file-upload-button {
+  display: none;
+}
