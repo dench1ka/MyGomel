@@ -8,7 +8,7 @@ body {
     background-color: #E3D9C3;
 }
 
-h1 {
+h1, h2 {
     width: 100%;
     height: auto;
     font-size: 36px;
@@ -78,6 +78,31 @@ footer {
     text-decoration: none;
     color: #1F3D1F;
     font: 500 24px 'Roboto', sans-serif;
+}
+
+.dropdown-content {
+    display:none;
+    position: absolute;
+    background-color: transparent;
+    min-width: 180px;
+
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px 0;
+    color: #1F3D1F;
+    text-decoration: none;
+    white-space: nowrap;
+    font: 500 16px 'Roboto', sans-serif;
+}
+
+.dropdown-content a:hover {
+    color: #4e954e;
+}
+
+.dropdown:hover .dropdown-content{
+    display: block;
 }
 
 .logo {
@@ -289,7 +314,7 @@ footer {
     border-radius: 30px;
 }
 
-.citizens-comments {
+.citizens-comments, .comments-list {
     width: 100%;
     height: auto;
     background-color: rgba(143, 209, 129, 0.5);
@@ -307,11 +332,11 @@ footer {
 }
 
 .comments {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
-  background-color: #b8d8a7;
   padding: 20px;
   border-radius: 20px;
   overflow: hidden;
@@ -352,7 +377,7 @@ footer {
 }
 
 
-.comments-card p {
+.comments-card p, .comment p {
     margin: 5px 0;
     font-size: 16px;
     overflow: hidden;
@@ -362,7 +387,7 @@ footer {
     -webkit-box-orient: vertical;
 }
 
-.comments-card > hr {
+.comments-card > hr, .comment hr {
     width: 100%;
     height: 2px;
     background-color: #004F46;
@@ -433,7 +458,7 @@ footer {
     background-color: #d9d9d9;
 }
 
-.comments-card {
+.comments-card, .comment {
   flex: 0 0 220px; /* фиксированная ширина */
   margin: 0;
   padding: 10px;
@@ -451,15 +476,16 @@ footer {
 }
 
 
-.slider-track {
+.slider-track, .comments-list {
   display: flex;
+  justify-content: spa;
   transition: transform 0.4s ease;
   gap: 20px;
   flex-shrink: 0; /* Чтобы трек не сжимался */
 }
 
 .slider-window {
-  width: 460px; /* 2 * 220 + 20 gap */
+  width: 90%; /* 2 * 220 + 20 gap */
   overflow: hidden;
   box-sizing: border-box;
   flex-shrink: 0; /* Важно! Не даём сжиматься */
@@ -477,28 +503,39 @@ footer {
     display: inline-block;
 }
 
-.dropdown-content {
-    display:none;
-    position: absolute;
-    background-color: white;
-    min-width: 180px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-    z-index: 1000;
+.citizens-comments > form {
+    width: 90%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
 }
 
-.dropdown-content a {
-    display: block;
-    padding: 10px 15px;
-    color: black;
-    text-decoration: none;
-    white-space: nowrap;
+.citizens-comments input {
+    height: 50px;
 }
 
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
+.citizens-comments textarea {
+    height: 100px;
 }
 
-.dropdown:hover .dropdown-content{
-    display: block;
+.citizens-comments textarea, .citizens-comments input {
+    padding: 10px;
+    font: 500 20px 'Roboto', sans-serif;
+    border-radius: 20px;
+    border: 1px solid black;
 }
 
+form > button {
+    width: 20%;
+        padding: 15px 30px;
+    color: #E3D9C3;
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    border-radius: 20px;
+    background-color: #004F46;
+    border: none;
+    cursor: pointer;
+}

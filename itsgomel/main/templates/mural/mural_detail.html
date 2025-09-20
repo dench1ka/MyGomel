@@ -7,8 +7,9 @@
 <section class="mural-detail">
     <h1>{{ mural.title }}</h1>
     {% if video_url %}
-      <iframe width="560" height="315" src="{{ video_url }}?rel=0&showinfo=0" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="{{ video_url }}?rel=0&showinfo=0" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
     {% endif %}
     <img src="{{ mural.image.url }}" alt="Изображение мурала {{ mural.title }}">
     <p><strong>Адрес:</strong> {{ mural.address }}</p>
@@ -18,67 +19,88 @@
     <div id="map" style="width: 100%; height: 400px;"></div>
 
     <script>
-ymaps.ready(function () {
-    var muralData = JSON.parse('{{ mural_json|escapejs }}');
+        ymaps.ready(function () {
+            var muralData = JSON.parse('{{ mural_json|escapejs }}');
 
-    if (!muralData.lat || !muralData.lng) {
-        document.getElementById('map').innerHTML = '<p>Координаты для этого мурала не указаны</p>';
-        return;
-    }
-
-        var map = new ymaps.Map("map", {
-            center: [muralData.lat, muralData.lng],
-            zoom: 16,
-            controls: ['zoomControl', 'fullscreenControl']
-        });
-
-        var placemark = new ymaps.Placemark(
-            [muralData.lat, muralData.lng],
-            {
-                balloonContent: [
-                    '<strong>' + muralData.title + '</strong>',
-                    '<p>' + muralData.address + '</p>'
-                ].join('<br>'),
-                hintContent: muralData.title
-            },
-            {
-                preset: 'islands#blueIcon'
+            if (!muralData.lat || !muralData.lng) {
+                document.getElementById('map').innerHTML = '<p>Координаты для этого мурала не указаны</p>';
+                return;
             }
-        );
 
-        map.geoObjects.add(placemark);
-        placemark.balloon.open();
-    });
+            var map = new ymaps.Map("map", {
+                center: [muralData.lat, muralData.lng],
+                zoom: 16,
+                controls: ['zoomControl', 'fullscreenControl']
+            });
+
+            var placemark = new ymaps.Placemark(
+                [muralData.lat, muralData.lng],
+                {
+                    balloonContent: [
+                        '<strong>' + muralData.title + '</strong>',
+                        '<p>' + muralData.address + '</p>'
+                    ].join('<br>'),
+                    hintContent: muralData.title
+                },
+                {
+                    preset: 'islands#blueIcon'
+                }
+            );
+
+            map.geoObjects.add(placemark);
+            placemark.balloon.open();
+        });
     </script>
 
     <hr>
 
-    <h2>Комментарии</h2>
+    <!-- <h2>Комментарии</h2>
     <div class="comments-list">
-        {% for comment in comments %}
-            <div class="comment">
-                <p><strong>{{ comment.name }}</strong> <small>{{ comment.created_at|date:"d.m.Y H:i" }}</small></p>
-                <p>{{ comment.text }}</p>
+       
+    </div> -->
+
+    <section class="citizens-comments">
+        <h1>Комментарии горожан</h1>
+        <div class="comments">
+            <div class="comments-arrow" id="comments-back">
+                <img src="{% static 'general/img/arrow.svg' %}" alt="Назад">
             </div>
-        {% empty %}
-            <p>Пока нет комментариев.</p>
-        {% endfor %}
-    </div>
 
-    <hr>
+            <div class="slider-window">
+                <div class="slider-track">
+                    {% for comment in comments %}
+                    <div class="comments-card comment">
+                        <p>
+                            <strong>{{ comment.name }}</strong>
+                            <small>{{ comment.created_at|date:"d.m.Y H:i" }}</small>
+                        </p>
+                        <hr>
+                        <p>{{ comment.text }}</p>
+                    </div>
+                    {% empty %}
+                    <p>Пока нет комментариев.</p>
+                    {% endfor %}
+                </div>
+            </div>
 
-    <h2>Добавить комментарий</h2>
-    <form method="post" action="">
-        {% csrf_token %}
-        <div>
-            <label for="id_name">Имя:</label><br>
-            <input type="text" id="id_name" name="name" required>
+            <div class="comments-arrow" id="comments-next">
+                <img src="{% static 'general/img/arrow.svg' %}" alt="Вперед">
+            </div>
         </div>
-        <div>
-            <label for="id_text">Комментарий:</label><br>
-            <textarea id="id_text" name="text" rows="4" required></textarea>
-        </div>
-        <button type="submit">Отправить</button>
-    </form>
+        <h2>Добавить комментарий</h2>
+        <form method="post" action="">
+            {% csrf_token %}
+            <div>
+                <label for="id_name">Имя:</label><br>
+                <input type="text" id="id_name" name="name" required>
+            </div>
+            <div>
+                <label for="id_text">Комментарий:</label><br>
+                <textarea id="id_text" name="text" rows="4" required></textarea>
+            </div>
+            <button type="submit">Отправить</button>
+        </form>
+    </section>
+
 </section>
 {% endblock %}
