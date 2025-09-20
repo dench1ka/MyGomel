@@ -81,16 +81,18 @@ footer {
 }
 
 .dropdown-content {
-    display:none;
+    display:flex;
+    flex-direction: column;
     position: absolute;
-    background-color: transparent;
+    background-color: #E3D9C3;
     min-width: 180px;
-
+    padding: 10px;
+    gap: 10px;
+    border-radius: 10px;
 }
 
 .dropdown-content a {
     display: block;
-    padding: 10px 0;
     color: #1F3D1F;
     text-decoration: none;
     white-space: nowrap;
@@ -101,9 +103,6 @@ footer {
     color: #4e954e;
 }
 
-.dropdown:hover .dropdown-content{
-    display: block;
-}
 
 .logo {
   max-height: 90px;
