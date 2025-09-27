@@ -80,17 +80,6 @@ footer {
     font: 500 24px 'Roboto', sans-serif;
 }
 
-.dropdown-content {
-    display:flex;
-    flex-direction: column;
-    position: absolute;
-    background-color: #E3D9C3;
-    min-width: 180px;
-    padding: 10px;
-    gap: 10px;
-    border-radius: 10px;
-}
-
 .dropdown-content a {
     display: block;
     color: #1F3D1F;
@@ -102,6 +91,39 @@ footer {
 .dropdown-content a:hover {
     color: #4e954e;
 }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none; /* скрываем по умолчанию */
+    position: absolute;
+    background-color: #fff; /* фон подменю */
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 10px;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #000;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+        border-radius: 10px;
+}
+
+/* показываем, когда навели на родителя */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 
 
 .logo {
@@ -554,3 +576,5 @@ form > button {
 .custom-file::-webkit-file-upload-button {
   display: none;
 }
+
+
