@@ -10,9 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+
 from pathlib import Path
 import os
 from decouple import config
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-*43_p54j@jbiy2&*#@iv&v=p4bpsg5sjh&e@%@zf0@!9$dev@g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False  # вместо True
+ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost']  # добавить vercel.app
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -134,3 +137,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'main', 'murals')
+
+# Для статики на Vercel
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Чтобы Django знал, где хостится сайт
+CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app']
