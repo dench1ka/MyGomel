@@ -6,13 +6,15 @@
 {% block content %}
 <section class="mural-detail">
     <h1>{{ mural.title }}</h1>
+    <div class="mural-media">
     {% if mural.video_file %}
-        <video width="640" height="360" controls>
+        <video controls>
             <source src="{{ mural.video_file.url }}" type="video/mp4">
             Ваш браузер не поддерживает видео.
         </video>
     {% endif %}
     <img src="{{ mural.image.url }}" alt="Изображение мурала {{ mural.title }}">
+    </div>
     <p><strong>Адрес:</strong> {{ mural.address }}</p>
     <p>{{ mural.description }}</p>
 
