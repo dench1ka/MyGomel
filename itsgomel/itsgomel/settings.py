@@ -15,6 +15,7 @@ from pathlib import Path
 import os
 from decouple import config
 
+# в settings.py
 import pymysql
 pymysql.install_as_MySQLdb()
 
@@ -75,7 +76,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'api.wsgi.app'
+WSGI_APPLICATION = 'itsgomel.wsgi.application'
+
 
 # WSGI_APPLICATION = 'itsgomel.wsgi.application'
 

@@ -1,5 +1,7 @@
-from vercel_wsgi import handle
+# api/index.py
 from itsgomel.wsgi import application
 
 def handler(event, context):
-    return handle(event, context, application)
+    from mangum import Mangum  # если используешь ASGI
+    asgi_handler = Mangum(application)
+    return asgi_handler(event, context)
