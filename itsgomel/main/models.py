@@ -5,8 +5,9 @@ class Mural(models.Model):
     title = models.CharField("Название", max_length=200)
     address = models.CharField("Адрес", max_length=300)
     description = models.CharField("Описание", max_length=500)
-    image = models.ImageField("Главное изображение", upload_to='')
-    video_url = models.URLField("Ссылка на видео", blank=True, null=True)
+    # image = models.ImageField("Главное изображение", upload_to='')
+    image = models.ImageField("Главное изображение", upload_to='murals/images/')
+    video_file = models.FileField("Видео", upload_to='murals/videos/', blank=True, null=True)
     latitude = models.FloatField("Широта", blank=True, null=True)
     longitude = models.FloatField("Долгота", blank=True, null=True)
 

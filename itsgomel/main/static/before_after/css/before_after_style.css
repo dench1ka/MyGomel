@@ -177,10 +177,6 @@
 }
 
 
-.before_after-detail > p, h1 {
-    text-align: start;
-}
-
 .gallery-description > p {
     color: #1F3D1F;
     font: 500 20px 'Roboto', sans-serif;

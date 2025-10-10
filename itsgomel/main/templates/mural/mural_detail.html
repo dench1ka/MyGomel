@@ -6,10 +6,11 @@
 {% block content %}
 <section class="mural-detail">
     <h1>{{ mural.title }}</h1>
-    {% if video_url %}
-    <iframe width="560" height="315" src="{{ video_url }}?rel=0&showinfo=0" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
+    {% if mural.video_file %}
+        <video width="640" height="360" controls>
+            <source src="{{ mural.video_file.url }}" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+        </video>
     {% endif %}
     <img src="{{ mural.image.url }}" alt="Изображение мурала {{ mural.title }}">
     <p><strong>Адрес:</strong> {{ mural.address }}</p>

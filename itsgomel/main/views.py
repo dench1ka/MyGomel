@@ -64,7 +64,7 @@ def get_embed_link(original_url):
 
 def mural_detail(request, pk):
     mural = get_object_or_404(Mural, pk=pk)
-    embed_link = get_embed_link(mural.video_url)
+    embed_link = mural.video_file.url if mural.video_file else None
 
     if request.method == 'POST':
         name = request.POST.get('name')
