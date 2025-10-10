@@ -73,7 +73,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'itsgomel.wsgi.application'
+WSGI_APPLICATION = 'api.wsgi.app'
+
+# WSGI_APPLICATION = 'itsgomel.wsgi.application'
 
 
 # Database
