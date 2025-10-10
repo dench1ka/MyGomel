@@ -1,5 +1,5 @@
 django
 gunicorn
-vercel-wsgi
+vercel-py
 python-decouple
 mysqlclient
